@@ -123,7 +123,7 @@ export const AnimatedTextAreaWrapper = ({
     spawnParticles(x, y);
   };
 
-  if (window != null)
+  if (typeof window !== "undefined")
     return (
       <div
         className={
