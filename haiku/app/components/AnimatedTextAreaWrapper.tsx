@@ -12,13 +12,21 @@ interface Particle {
 }
 
 const MAX_PARTICLES = 50;
-const PARTICLE_ALPHA_FADEOUT = 0.96;
+const PARTICLE_ALPHA_FADEOUT = 0.99;
 const PARTICLE_VELOCITY_RANGE = {
   x: [0, 3], // controls the x direction particle velocity range
-  y: [-2.5, -1.5], // controls the y direction particle velocity range
+  y: [-3.5, -1.5], // controls the y direction particle velocity range
 };
 
-const MyAnimatedTextarea: React.FC = () => {
+interface AnimatedTextAreaProps {
+  haiku: string;
+  onChange: (event: any) => void;
+}
+
+export const AnimatedTextAreaWrapper = ({
+  haiku,
+  onChange,
+}: AnimatedTextAreaProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const [needsRedraw, setNeedsRedraw] = useState(false);
@@ -68,7 +76,7 @@ const MyAnimatedTextarea: React.FC = () => {
   const spawnParticles = (x: number, y: number) => {
     const numParticles = 5 + Math.round(Math.random() * 5);
     for (let i = 0; i < numParticles; i++) {
-      const color = [255, 0, 0]; // Red color for demonstration
+      const color = [Math.random() * 155, Math.random() * 155 + 100, 255];
       particles.current.push(createParticle(x, y, color));
     }
 
@@ -106,7 +114,7 @@ const MyAnimatedTextarea: React.FC = () => {
     const colNum = lines[lines.length - 1].length;
 
     // You may need to adjust these based on your specific styling
-    const charWidth = 10; // Approximate width of a character in pixels
+    const charWidth = 9.65; // Approximate width of a character in pixels
     const lineHeight = 20; // Approximate line height in pixels
 
     const x = left + colNum * charWidth;
@@ -115,21 +123,44 @@ const MyAnimatedTextarea: React.FC = () => {
     spawnParticles(x, y);
   };
 
-  return (
-    <div style={{ position: "relative" }}>
-      <textarea
-        onInput={handleInput}
-        style={{ zIndex: 1 }}
-        className={"font-mono h-64 leading-5 w-full"}
-      />
-      <canvas
-        ref={canvasRef}
-        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
-        width={window.innerWidth}
-        height={window.innerHeight}
-      ></canvas>
-    </div>
-  );
+  if (window != null)
+    return (
+      <div
+        className={
+          "rounded-[calc(1.5rem-1px)] p-px bg-gradient-to-tr from-blue-400 to-cyan-500"
+        }
+      >
+        <div
+          className={
+            "rounded-[calc(1.5rem-1px)] p-10 bg-gradient-to-tr from-blue-900 to-cyan-900"
+          }
+        >
+          <div className={""}>
+            <textarea
+              onInput={handleInput}
+              id={"haikuWindow"}
+              value={haiku}
+              onChange={onChange}
+              rows={5}
+              cols={50}
+              className={
+                "font-mono h-32 leading-5 w-full z-index-10 border-none outline-none resize-none bg-transparent text-white"
+              }
+            />
+            <canvas
+              ref={canvasRef}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                pointerEvents: "none",
+              }}
+              width={window.innerWidth}
+              height={window.innerHeight}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  return null;
 };
-
-export default MyAnimatedTextarea;

@@ -1,6 +1,6 @@
-import { syllable } from "syllable";
+import {syllable} from "syllable";
 
-export function verifyHaiku(haiku: string): string[] | null {
+export function verifyHaiku(haiku: string): string[] {
   const lines = haiku.trim().split("\n");
   const syllableCounts = lines.map((line) => countSyllables(line));
 
@@ -8,21 +8,21 @@ export function verifyHaiku(haiku: string): string[] | null {
 
   // Haiku should have three lines
   if (lines.length !== 3) {
-    errors.push("Haiku should have exactly three lines.");
+    errors.push("1");
   }
-
   // Haiku should have 5, 7, and 5 syllables respectively
   if (syllableCounts[0] !== 5) {
-    errors.push("First line should have 5 syllables.");
+    errors.push("2");
   }
   if (syllableCounts[1] !== 7) {
-    errors.push("Second line should have 7 syllables.");
+    errors.push("3");
   }
   if (syllableCounts[2] !== 5) {
-    errors.push("Third line should have 5 syllables.");
+    errors.push("4");
   }
+  errors.length > 0 ? errors : errors.push("5");
 
-  return errors.length > 0 ? errors : null;
+  return errors;
 }
 
 function countSyllables(line: string): number {
@@ -36,7 +36,5 @@ function countSyllables(line: string): number {
 
 // Helper function to count syllables in a word (naive implementation)
 function countSyllablesInWord(word: string): number {
-  const syllableCount = syllable(word);
-
-  return syllableCount;
+  return syllable(word);
 }
