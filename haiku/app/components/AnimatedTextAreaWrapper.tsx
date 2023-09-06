@@ -135,32 +135,30 @@ export const AnimatedTextAreaWrapper = ({
             "rounded-[calc(1.5rem-1px)] p-10 bg-gradient-to-tr from-blue-900 to-cyan-900"
           }
         >
-          <div className={""}>
-            <textarea
-              onInput={handleInput}
-              id={"haikuWindow"}
-              value={haiku}
-              onChange={onChange}
-              rows={5}
-              cols={50}
-              className={
-                "font-mono h-32 leading-5 w-full z-index-10 border-none outline-none resize-none bg-transparent text-white"
-              }
-            />
-            <canvas
-              ref={canvasRef}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                pointerEvents: "none",
-              }}
-              width={window.innerWidth}
-              height={window.innerHeight}
-            />
-          </div>
+          <textarea
+            onInput={handleInput}
+            id={"haikuWindow"}
+            value={haiku}
+            onChange={onChange}
+            rows={5}
+            cols={50}
+            className={
+              "font-mono h-32 leading-5 w-full z-index-10 border-none outline-none resize-none bg-transparent text-white"
+            }
+          />
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              pointerEvents: "none",
+            }}
+            width={window.innerWidth}
+            height={window.innerHeight}
+          />
         </div>
       </div>
     );
-  return null;
+  return <div></div>;
 };

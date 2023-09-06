@@ -1,4 +1,4 @@
-import {syllable} from "syllable";
+import { syllable } from "syllable";
 
 export function verifyHaiku(haiku: string): string[] {
   const lines = haiku.trim().split("\n");

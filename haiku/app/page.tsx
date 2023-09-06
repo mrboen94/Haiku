@@ -4,16 +4,19 @@ import { useEffect, useState } from "react";
 import { AnimatedTextAreaWrapper } from "@/app/components/AnimatedTextAreaWrapper";
 
 export default function Home() {
-  const url = typeof window !== "undefined" ? new URL(window.location.href) : null;
-  const [haiku, setHaiku] = useState(url?.searchParams.get('haiku') ?? "");
+  const url =
+    typeof window !== "undefined" ? new URL(window.location.href) : null;
+  const [haiku, setHaiku] = useState(url?.searchParams.get("haiku") ?? "");
   const [errors, setErrors] = useState<string[] | null>(["1", "2", "3", "4"]);
 
   useEffect(() => {
     haiku && setErrors(verifyHaiku(haiku));
     if (url && typeof window !== "undefined") {
-      url.searchParams.set('haiku', haiku);
-      const newUrl = `${url.origin}${url.pathname}?${url.searchParams.toString()}`;
-      window.history.pushState({ path: newUrl }, '', newUrl);
+      url.searchParams.set("haiku", haiku);
+      const newUrl = `${url.origin}${
+        url.pathname
+      }?${url.searchParams.toString()}`;
+      window.history.pushState({ path: newUrl }, "", newUrl);
     }
   }, [haiku]);
 
