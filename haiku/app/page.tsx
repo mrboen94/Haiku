@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     haiku && setErrors(verifyHaiku(haiku));
-    if (url && typeof window !== "undefined") {
+    if (url) {
       url.searchParams.set("haiku", haiku);
       const newUrl = `${url.origin}${
         url.pathname

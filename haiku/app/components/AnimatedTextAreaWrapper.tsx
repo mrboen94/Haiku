@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client"
+import React, {useEffect, useRef, useState} from "react";
 
 interface Particle {
   x: number;
@@ -30,8 +31,15 @@ export const AnimatedTextAreaWrapper = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const [needsRedraw, setNeedsRedraw] = useState(false);
+  const [safeToRender, setSafeToRender] = useState(false);
 
   useEffect(() => {
+    setSafeToRender(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -123,7 +131,6 @@ export const AnimatedTextAreaWrapper = ({
     spawnParticles(x, y);
   };
 
-  if (typeof window !== "undefined")
     return (
       <div
         className={
@@ -146,6 +153,7 @@ export const AnimatedTextAreaWrapper = ({
               "font-mono h-32 leading-5 w-full z-index-10 border-none outline-none resize-none bg-transparent text-white"
             }
           />
+          {safeToRender && (
           <canvas
             ref={canvasRef}
             style={{
@@ -156,9 +164,8 @@ export const AnimatedTextAreaWrapper = ({
             }}
             width={window.innerWidth}
             height={window.innerHeight}
-          />
+          />)}
         </div>
       </div>
-    );
-  return <div></div>;
+    )
 };
